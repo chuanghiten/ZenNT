@@ -8,7 +8,7 @@ Because there is not much time for it, creating this repository is only for shar
 1. Configuration for Windows:
 - Show accent color on title bar and window borders: Enable.
 2. Configuration for Zen Browser:
-- Use Zen Twilight 1.7t (20250112023249).
+- Use Zen Twilight 1.7t (20250118030332).
 - Use Single Toolbar and Compact Mode.
 - Use dark mode.
 - Turn off Prefers contrast.
