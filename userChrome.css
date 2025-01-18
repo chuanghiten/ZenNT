@@ -405,18 +405,30 @@
                         border-radius: calc(var(--border-radius-medium) - var(--tab-block-margin));
                       }
                     }
-                  }
-                  &:is([multiselected="true"],
-                  [selected="true"],
-                  [usercontextid],
-                  :hover) {
-                    & .tab-stack {
-                      & .tab-background {
-                        &::before {
-                          box-shadow: var(--tab-selected-shadow);
-                        }
-                        &::after {
-                          box-shadow: var(--tab-selected-shadow) inset;
+                    & .tab-content {
+                      & .tabbrowser-tab {
+                        --toolbarbutton-inner-padding: calc((var(--tab-min-height) - 16px) / 2) !important;
+/*                         margin-left: 2px !important; */
+                        & .tab-stack {
+                          & .tab-background {
+                            &::before {
+                              width: 0 !important;
+                              box-shadow: none !important;
+                            }
+                            &::after {
+                              left: var(--tab-block-margin);
+                              width: calc(100% - (2 * var(--tab-block-margin)));
+                            }
+                          }
+                          & .tab-content {
+                            padding: 0 var(--tab-inline-padding) !important;
+                            & .tab-icon-stack {
+                              & .tab-icon-image, & .tab-icon-pending, & .tab-throbber, & .tab-icon-overlay {
+                                --toolbarbutton-inner-padding: calc((var(--tab-min-height) - 16px) / 2) !important;
+                                margin-inline: calc(var(--toolbarbutton-inner-padding) / 4) !important;
+                              }
+                            }
+                          }
                         }
                       }
                     }
@@ -429,6 +441,26 @@
                       }
                     }
                   }
+/*                   &:has(.tabbrowser-tab:is([selected="true"], [multiselected="true"])) {
+                    background: #f00 !important;
+                  } */
+                  &:is([multiselected="true"],
+                  [selected="true"],
+                  [usercontextid],
+                  :hover),
+                  &:has(.tabbrowser-tab:is([selected="true"],
+                  [multiselected="true"])) {
+                    & .tab-stack {
+                      & .tab-background {
+                        &::before {
+                          box-shadow: var(--tab-selected-shadow);
+                        }
+                        &::after {
+                          box-shadow: var(--tab-selected-shadow) inset;
+                        }
+                      }
+                    }
+                  }
                   &:is([soundplaying],
                   [muted],
                   [activemedia-blocked],
@@ -438,15 +470,7 @@
                         & .tab-icon-stack {
                           grid-template-columns: auto auto !important;
                           grid-gap: 0 !important;
-                          & .tab-icon-image {
-                            margin-inline-end: calc(var(--toolbarbutton-inner-padding) / 4) !important;
-                            grid-column: 1/2 !important;
-                          }
-                          & .tab-icon-pending {
-                            margin-inline-end: calc(var(--toolbarbutton-inner-padding) / 4) !important;
-                            grid-column: 1/2 !important;
-                          }
-                          & .tab-throbber {
+                          & .tab-icon-image, & .tab-icon-pending, & .tab-throbber {
                             margin-inline-end: calc(var(--toolbarbutton-inner-padding) / 4) !important;
                             grid-column: 1/2 !important;
                           }
@@ -459,6 +483,17 @@
                             padding: 0 !important;
                             border-radius: 0 !important;
                             cursor: pointer !important;
+                          }
+                        }
+                        & .tabbrowser-tab {
+                          & .tab-stack {
+                            & .tab-content {
+                              & .tab-icon-stack {
+                                & .tab-icon-image, & .tab-icon-pending, & .tab-throbber, & .tab-icon-overlay {
+                                  margin-inline: calc(var(--toolbarbutton-inner-padding) / 4) !important;
+                                }
+                              }
+                            }
                           }
                         }
                       }
@@ -521,13 +556,7 @@
                       & .tab-content {
                         padding-left: var(--tab-inline-padding) !important;
                         & .tab-icon-stack {
-                          & .tab-icon-image {
-                            margin-inline-end: calc(var(--toolbarbutton-inner-padding) + (var(--toolbarbutton-inner-padding) / 2)) !important;
-                          }
-                          & .tab-icon-pending {
-                            margin-inline-end: calc(var(--toolbarbutton-inner-padding) + (var(--toolbarbutton-inner-padding) / 2)) !important;
-                          }
-                          & .tab-throbber {
+                          & .tab-icon-image, & .tab-icon-pending, & .tab-throbber {
                             margin-inline-end: calc(var(--toolbarbutton-inner-padding) + (var(--toolbarbutton-inner-padding) / 2)) !important;
                           }
                         }
@@ -605,13 +634,7 @@
                       & .tab-stack {
                         & .tab-content {
                           & .tab-icon-stack {
-                            & .tab-icon-image {
-                              margin-inline-end: calc(var(--toolbarbutton-inner-padding) / 4) !important;
-                            }
-                            & .tab-icon-pending {
-                              margin-inline-end: calc(var(--toolbarbutton-inner-padding) / 4) !important;
-                            }
-                            & .tab-throbber {
+                            & .tab-icon-image, & .tab-icon-pending, & .tab-throbber {
                               margin-inline-end: calc(var(--toolbarbutton-inner-padding) / 4) !important;
                             }
                             & .tab-icon-overlay {
@@ -666,6 +689,9 @@
                       &:hover {
                         & .tab-stack {
                           & .tab-background {
+                            &::before {
+                              width: calc(100% - (2 * var(--tab-block-margin)));
+                            }
                             &::after {
                               width: calc((100% - ((2 * (var(--tab-inline-padding) - var(--tab-block-margin))) + (var(--toolbarbutton-inner-padding) / 2) + 16px + (var(--tab-block-margin) * 3))) - (24px + (2 *(var(--tab-inline-padding) - (2 * var(--tab-block-margin))))) - 0px - 16px - (var(--toolbarbutton-inner-padding) / 3));
                             }
@@ -679,7 +705,7 @@
                       & .tab-background {
                         &::after {
                           width: 0;
-                          left: calc(100% - var(--tab-block-margin) * 2);
+                          left: calc((2 * (var(--tab-inline-padding) - var(--tab-block-margin))) + (var(--toolbarbutton-inner-padding) / 2) + 16px + var(--tab-block-margin));
                         }
                         &::before {
                           width: calc(100% - (2 * var(--tab-block-margin)));
@@ -708,7 +734,7 @@
                         & .tab-background {
                           &::after {
                             width: 0;
-                            left: calc(100% - var(--tab-block-margin) * 2);
+                            left: calc(100% - (var(--tab-block-margin) * 2) - (24px + (2 *(var(--tab-inline-padding) - (2 * var(--tab-block-margin))))));
                           }
                         }
                       }
@@ -744,15 +770,14 @@
                     [activemedia-blocked],
                     [crashed]) {
                       & .tab-stack {
+                        & .tab-background {
+                          &::after {
+                            left: calc((2 * (var(--tab-inline-padding) - var(--tab-block-margin))) + (var(--toolbarbutton-inner-padding) / 2) + 16px + var(--tab-block-margin) + 0px + 16px + (var(--toolbarbutton-inner-padding) / 3));
+                          }
+                        }
                         & .tab-content {
                           & .tab-icon-stack {
-                            & .tab-icon-image {
-                              margin-inline-end: calc(var(--toolbarbutton-inner-padding) / 4) !important;
-                            }
-                            & .tab-icon-pending {
-                              margin-inline-end: calc(var(--toolbarbutton-inner-padding) / 4) !important;
-                            }
-                            & .tab-throbber {
+                            & .tab-icon-image, & .tab-icon-pending, & .tab-throbber {
                               margin-inline-end: calc(var(--toolbarbutton-inner-padding) / 4) !important;
                             }
                             & .tab-icon-overlay {
@@ -798,6 +823,280 @@
                               }
                             }
                           }
+                        }
+                      }
+                    }
+                  }
+                  &:has(.tabbrowser-tab:is([selected="true"],
+                  [multiselected="true"])) {
+                    & .tab-stack {
+                      & .tab-background {
+                        &::before {
+                          width: calc(100% - (2 * var(--tab-block-margin)));
+                        }
+                        &::after {
+                          width: calc((((100% - ((2 * (var(--tab-inline-padding) - var(--tab-block-margin))) + (var(--toolbarbutton-inner-padding) / 2) + 16px + (var(--tab-block-margin) * 3))) - (24px + (2 * (var(--tab-inline-padding) - (2 * var(--tab-block-margin)))))) - var(--tab-block-margin)) - 1px);
+                          left: calc((2 * (var(--tab-inline-padding) - var(--tab-block-margin))) + (var(--toolbarbutton-inner-padding) / 2) + 16px + var(--tab-block-margin));
+/*                           left: calc((2 * ((var(--toolbarbutton-inner-padding) / 4) + var(--tab-inline-padding) + (16px / 2))) - var(--tab-block-margin)); */
+                        }
+                      }
+                      & .tab-content {
+                        padding-right: var(--tab-block-margin) !important;
+                        padding-left: var(--tab-inline-padding) !important;
+                        & .tab-icon-stack {
+                          & .tab-icon-image, & .tab-icon-pending, & .tab-throbber {
+                            margin-inline-end: calc(var(--toolbarbutton-inner-padding) + (var(--toolbarbutton-inner-padding) / 2)) !important;
+                          }
+                        }
+                      }
+                    }
+                    &:hover {
+                      & .tab-stack {
+                        & .tab-background {
+                          &::after {
+                            width: calc((((100% - ((2 * (var(--tab-inline-padding) - var(--tab-block-margin))) + (var(--toolbarbutton-inner-padding) / 2) + 16px + (var(--tab-block-margin) * 3))) - (24px + (2 * (var(--tab-inline-padding) - (2 * var(--tab-block-margin)))))) - var(--tab-block-margin)) - (1px + (2 * var(--tab-close-button-padding)) + 12px + var(--tab-block-margin)));
+                          }
+                        }
+                        & .tab-content {
+                          & .tabbrowser-tab {
+                            & .tab-stack {
+                              & .tab-background {
+                                &::after {
+                                  left: var(--tab-block-margin);
+                                  width: calc(100% - (2 * var(--tab-block-margin)));
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                  &:has(.tabbrowser-tab:is([selected="true"],
+                  [multiselected="true"]):is([soundplaying],
+                  [muted],
+                  [activemedia-blocked],
+                  [crashed])) {
+                    & .tab-stack {
+                      & .tab-background {
+                        &::after {
+/*                           width: 0; */
+                          width: calc((((100% - ((2 * (var(--tab-inline-padding) - var(--tab-block-margin))) + (var(--toolbarbutton-inner-padding) / 2) + 16px + (var(--tab-block-margin) * 3))) - (24px + (2 * (var(--tab-inline-padding) - (2 * var(--tab-block-margin)))))) - var(--tab-block-margin)) - 1px - 16px - (var(--toolbarbutton-inner-padding) / 2));
+                        }
+                      }
+                      & .tab-content {
+                        & .tabbrowser-tab {
+                          & .tab-stack {
+                            & .tab-background {
+                              &::after {
+                                width: calc(100% - (2 * var(--tab-block-margin)));
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                    &:hover {
+                      & .tab-stack {
+                        & .tab-background {
+                          &::after {
+                            width: calc((((100% - ((2 * (var(--tab-inline-padding) - var(--tab-block-margin))) + (var(--toolbarbutton-inner-padding) / 2) + 16px + (var(--tab-block-margin) * 3))) - (24px + (2 * (var(--tab-inline-padding) - (2 * var(--tab-block-margin)))))) - var(--tab-block-margin)) - (1px + (2 * var(--tab-close-button-padding)) + 12px + var(--tab-block-margin)) - 16px - (var(--toolbarbutton-inner-padding) / 2));
+                          }
+                        }
+                      }
+                    }
+                  }
+                  &:is([soundplaying],
+                  [muted],
+                  [activemedia-blocked],
+                  [crashed]):has(.tabbrowser-tab:is([selected="true"],
+                  [multiselected="true"])) {
+                    & .tab-stack {
+                      & .tab-background {
+                        &::after {
+/*                           width: calc(100% - ((2 * (var(--tab-inline-padding) - var(--tab-block-margin))) + (var(--toolbarbutton-inner-padding) / 2) + 16px + (var(--tab-block-margin) * 3)) - 0px - 16px - (var(--toolbarbutton-inner-padding) / 3)); */
+                          width: calc((((100% - ((2 * (var(--tab-inline-padding) - var(--tab-block-margin))) + (var(--toolbarbutton-inner-padding) / 2) + 16px + (var(--tab-block-margin) * 3))) - (24px + (2 * (var(--tab-inline-padding) - (2 * var(--tab-block-margin)))))) - var(--tab-block-margin)) - 1px - (16px + (var(--toolbarbutton-inner-padding) / 3)));
+                          left: calc((2 * (var(--tab-inline-padding) - var(--tab-block-margin))) + (var(--toolbarbutton-inner-padding) / 2) + 16px + var(--tab-block-margin) + 0px + 16px + (var(--toolbarbutton-inner-padding) / 3));
+                        }
+                      }
+                      & .tab-content {
+                        & .tab-icon-stack {
+                          & .tab-icon-image, & .tab-icon-pending, & .tab-throbber {
+                            margin-inline-end: calc(var(--toolbarbutton-inner-padding) / 4) !important;
+                          }
+                          & .tab-icon-overlay {
+                            margin-inline-end: calc(var(--toolbarbutton-inner-padding) + (var(--toolbarbutton-inner-padding) / 2)) !important;
+                          }
+                        }
+                        & .tabbrowser-tab {
+                          & .tab-stack {
+                            & .tab-background {
+                              &::after {
+                                left: var(--tab-block-margin);
+                                width: calc(100% - (2 * var(--tab-block-margin)));
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                    &:hover {
+                      & .tab-stack {
+                        & .tab-background {
+                          &::after {
+                            width: calc((((100% - ((2 * (var(--tab-inline-padding) - var(--tab-block-margin))) + (var(--toolbarbutton-inner-padding) / 2) + 16px + (var(--tab-block-margin) * 3))) - (24px + (2 * (var(--tab-inline-padding) - (2 * var(--tab-block-margin)))))) - var(--tab-block-margin)) - (1px + (2 * var(--tab-close-button-padding)) + 12px + var(--tab-block-margin)) - (16px + (var(--toolbarbutton-inner-padding) / 3)));
+                          }
+                        }
+                      }
+                    }
+                  }
+                  &:is([soundplaying],
+                  [muted],
+                  [activemedia-blocked],
+                  [crashed]):has(.tabbrowser-tab:is([selected="true"],
+                  [multiselected="true"]):is([soundplaying],
+                  [muted],
+                  [activemedia-blocked],
+                  [crashed])) {
+                    & .tab-stack {
+                      & .tab-background {
+                        &::after {
+                          width: calc((((100% - ((2 * (var(--tab-inline-padding) - var(--tab-block-margin))) + (var(--toolbarbutton-inner-padding) / 2) + 16px + (var(--tab-block-margin) * 3))) - (24px + (2 * (var(--tab-inline-padding) - (2 * var(--tab-block-margin)))))) - var(--tab-block-margin)) - 0px - ((var(--toolbarbutton-inner-padding) / 4) + (2 * (16px + (var(--toolbarbutton-inner-padding) / 3)))));
+                        }
+                      }
+                      & .tab-content {
+                        & .tabbrowser-tab {
+                          & .tab-stack {
+                            & .tab-background {
+                              &::after {
+                                width: calc(100% - (2 * var(--tab-block-margin)));
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                    &:hover {
+                      & .tab-stack {
+                        & .tab-background {
+                          &::after {
+                            width: calc((((100% - ((2 * (var(--tab-inline-padding) - var(--tab-block-margin))) + (var(--toolbarbutton-inner-padding) / 2) + 16px + (var(--tab-block-margin) * 3))) - (24px + (2 * (var(--tab-inline-padding) - (2 * var(--tab-block-margin)))))) - var(--tab-block-margin)) - (0px + (2 * var(--tab-close-button-padding)) + 12px + var(--tab-block-margin)) - ((var(--toolbarbutton-inner-padding) / 4) + (2 * (16px + (var(--toolbarbutton-inner-padding) / 3)))));
+                          }
+                        }
+                      }
+                    }
+                  }
+                  &:has(.tabbrowser-tab[multiselected="true"]) {
+                    & .tab-stack {
+                      & .tab-background {
+                        &::after {
+                          width: 0;
+                        }
+                      }
+                      & .tab-content {
+                        & .tab-icon-stack {
+                          & .tab-throbber, & .tab-icon-pending, & .tab-icon-image, & .tab-sharing-icon-overlay, & .tab-icon-overlay {
+                            margin-inline-end: var(--toolbarbutton-inner-padding) !important;
+                          }
+                        }
+                      }
+                    }
+                    &:hover {
+                      & .tab-stack {
+                        & .tab-content {
+                          & .tab-icon-stack {
+                            & .tab-throbber, & .tab-icon-pending, & .tab-icon-image, & .tab-sharing-icon-overlay, & .tab-icon-overlay {
+                              margin-inline-end: calc(var(--toolbarbutton-inner-padding) + (var(--toolbarbutton-inner-padding) / 2)) !important
+                            
+                            
+                            }
+                          }
+                          & .tabbrowser-tab {
+                            & .tab-stack {
+                              & .tab-content {
+                                & .tab-icon-stack {
+                                  & .tab-throbber, & .tab-icon-pending, & .tab-icon-image, & .tab-sharing-icon-overlay, & .tab-icon-overlay {
+                                    margin-inline-end: calc(var(--toolbarbutton-inner-padding) / 4) !important
+                                  
+                                  
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                      &:is([soundplaying],
+                      [muted],
+                      [activemedia-blocked],
+                      [crashed]) {
+                        & .tab-stack {
+                          & .tab-content {
+                            & .tab-icon-stack {
+                              & .tab-throbber, & .tab-icon-pending, & .tab-icon-image {
+                                margin-inline-end: calc(var(--toolbarbutton-inner-padding) / 4) !important
+                              
+                              
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                  &:has(.tabbrowser-tab[multiselected="true"]:is([soundplaying],
+                  [muted],
+                  [activemedia-blocked],
+                  [crashed])) {
+                    & .tab-stack {
+                      & .tab-background {
+                        &::after {
+                          width: 0;
+                        }
+                      }
+                    }
+                  }
+                  &:is([soundplaying],
+                  [muted],
+                  [activemedia-blocked],
+                  [crashed]):has(.tabbrowser-tab[multiselected="true"]) {
+                    & .tab-stack {
+                      & .tab-background {
+                        &::after {
+                          width: 0;
+                        }
+                      }
+                      & .tab-content {
+                        & .tab-icon-stack {
+                          & .tab-sharing-icon-overlay, & .tab-icon-overlay {
+                            margin-inline-end: var(--toolbarbutton-inner-padding) !important;
+                          }
+                        }
+                      }
+                    }
+                    &:hover {
+                      & .tab-stack {
+                        & .tab-content {
+                          & .tab-icon-stack {
+                            & .tab-sharing-icon-overlay, & .tab-icon-overlay {
+                              margin-inline-end: calc(var(--toolbarbutton-inner-padding) + (var(--toolbarbutton-inner-padding) / 2)) !important;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                  &:is([soundplaying],
+                  [muted],
+                  [activemedia-blocked],
+                  [crashed]):has(.tabbrowser-tab[multiselected="true"]:is([soundplaying],
+                  [muted],
+                  [activemedia-blocked],
+                  [crashed])) {
+                    & .tab-stack {
+                      & .tab-background {
+                        &::after {
+                          width: 0;
                         }
                       }
                     }
@@ -1058,6 +1357,12 @@
         margin: var(--zen-element-separation) !important;
         backdrop-filter: blur(5px) saturate(180%) !important;
       }
+      .dialogBox:not(.spotlightBox) {
+        border: 1px solid var(--cnt_border_color) !important;
+        border-bottom-color: var(--cnt_second_border_color) !important;
+        border-right-color: var(--cnt_second_border_color) !important;
+        backdrop-filter: blur(5px) saturate(180%) !important;
+      }
       .content-shortcuts {
         background-color: var(--cnt_background) !important;
         backdrop-filter: blur(5px) saturate(180%) !important;
@@ -1085,6 +1390,7 @@
         --in-content-primary-button-text-color-hover: var(--cnt_text_color) !important;
         --in-content-primary-button-border-hover: transparent !important;
         --in-content-button-text-color-hover: color-mix(in srgb, var(--cnt_text_color) 80%, transparent) !important;
+        --in-content-page-background: transparent !important;
       }
       #commonDialogWindow {
         background-color: var(--cnt_background) !important;
@@ -1125,7 +1431,7 @@
                 color: var(--cnt_text_color) !important;
               }
               button {
-                fill: var(--cnt_highlight_color) !important;
+                fill: var(--cnt_text_color) !important;
                 border: 1px solid transparent !important;
                 &:hover {
                   background-color: var(--cnt_background) !important;
@@ -1136,7 +1442,8 @@
               }
             }
           }
-          & .control-item:focus-visible::after, & .control-item:hover::after {
+          & .control-item:focus-visible::after,
+          & .control-item:hover::after {
             background: var(--cnt_background) !important;
             border: 1px solid var(--cnt_border_color) !important;
             border-bottom-color: var(--cnt_second_border_color) !important;
