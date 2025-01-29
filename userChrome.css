@@ -95,7 +95,7 @@
             }
           }
         }
-        @media (-moz-bool-pref: "zen.view.compact") {
+        @media (-moz-bool-pref: "zen.view.compact") or ((-moz-bool-pref: "zen.view.compact.hide-tabbar") or (-moz-bool-pref: "zen.view.use-single-toolbar")) {
           :root:not([customizing]):not([inDOMFullscreen="true"]) {
             @media (-moz-bool-pref: "zen.view.compact.hide-tabbar") or (-moz-bool-pref: "zen.view.use-single-toolbar") {
               & #navigator-toolbox {
