@@ -14,3 +14,4 @@ Because there is not much time for it, creating this repository is only for shar
  * Turn off Prefers contrast.
  * Bookmark bar [CTRL + SHIFT + b]: Disable.
  * browser.tabs.allow_transparent_browser: False.
+ * widget.windows.mica: False.
